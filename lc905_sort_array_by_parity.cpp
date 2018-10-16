@@ -1,23 +1,27 @@
 class Solution {
 public:
     vector<int> sortArrayByParity(vector<int>& A) {
+
+        bool has_odd = false;
+        vector<int>::iterator odd, curr;
+        int temp;
         
-        vector <int> oddA, evenA;
-        vector<int>::iterator it;
-        for (it = A.begin(); it != A.end(); it++) {
-            if ((*it)%2 == 0)
-                evenA.push_back(*it);
-            else
-                oddA.push_back(*it);
-        }
-        
-        vector <int> finalA;
-        
-        for(it = evenA.begin(); it != evenA.end(); it++ )
-            finalA.push_back(*it);
-        
-        for(it = oddA.begin(); it != oddA.end(); it++ )
-            finalA.push_back(*it);
-        return finalA;
+        for (curr = A.begin(); curr != A.end(); curr++) {
+            if ((*curr)%2 != 0){
+                if(!has_odd) {
+                    odd = curr;
+                    has_odd = true;
+                }       
+            }
+            else{
+                if(has_odd){
+                    temp = *curr;
+                    *curr = *odd;
+                    *odd = temp;
+                    odd++;
+                }
+            }    
+        }     
+        return A;
     }
 };
